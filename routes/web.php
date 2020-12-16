@@ -13,16 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('offer');
-});
-
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/offertest', [App\Http\Controllers\OfferController::class, 'index']);
+Route::get('/', [App\Http\Controllers\OfferController::class, 'index']);
 
 Route::get('/offer/create', [App\Http\Controllers\OfferController::class, 'create']);
 
 Route::post('offer/create', [App\Http\Controllers\OfferController::class, 'store']);
+
+Route::get('/offer/{id}/edit', [App\Http\Controllers\OfferController::class, 'edit']);
+
+Route::patch('/offer/{id}/edit', [App\Http\Controllers\OfferController::class, 'edit']);
