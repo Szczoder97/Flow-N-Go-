@@ -25,4 +25,6 @@ Route::post('offer/create', [App\Http\Controllers\OfferController::class, 'store
 
 Route::get('/offer/{id}/edit', [App\Http\Controllers\OfferController::class, 'edit']);
 
-Route::patch('/offer/{id}/edit', [App\Http\Controllers\OfferController::class, 'edit']);
+Route::patch('/offer/{id}/edit', [App\Http\Controllers\OfferController::class, 'update']);
+
+Route::get('/offer/{id}/delete', [App\Http\Controllers\OfferController::class, 'destroy']);

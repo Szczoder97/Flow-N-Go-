@@ -26,10 +26,10 @@ class OfferController extends Controller
 
     public function store(Request $request){
 
-       /* $validated = $request->validate([
-            'name' => ['required', 'unique', 'max:255'],
-            'description' => ['reqired']
-        ]);*/
+       $validated = $request->validate([
+            'name' => ['required', 'max:255'],
+            'description' => ['required']
+        ]);
 
         $offer = new Offer;
         $offer->name = $request->input('name');
@@ -40,17 +40,37 @@ class OfferController extends Controller
     }
     public function edit($id){
         $offer = Offer::find($id);
-        return view('offer.edit')->with('offer', $offer);
+        if($offer->user_id == auth()->user()->id){
+            return view('offer.edit')->with('offer', $offer);
+        }
+        else{
+            return redirect('https://www.youtube.com/watch?v=73T5NVNb7lE');
+        }
+        
     }
 
     public function update(Request $request, $id){
+        $validated = $request->validate([
+            'name' => ['required', 'max:255'],
+            'description' => ['required']
+        ]);
         $offer = Offer::find($id);
-        $offer->name = $request->input('name');
-        $offer->description = $request->input('description');
-        $offer->save();
-        return redirect()->back();
+        if($offer->user_id == auth()->user()->id){
+        $offer->update($request->all());
+        return $offer;
+        }
+        else{
+            return redirect('https://www.youtube.com/watch?v=73T5NVNb7lE');
+        }
     }
-    public function delete(){
-
+    public function destroy($id){
+        $offer = Offer::find($id);
+        if($offer->user_id == auth()->user()->id){
+        $offer->delete();
+        return 'succes';
+        }
+        else{
+            return redirect('https://www.youtube.com/watch?v=73T5NVNb7lE');
+        }
     }
 }
